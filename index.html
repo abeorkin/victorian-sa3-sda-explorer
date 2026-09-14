@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Victorian SA3 Socioeconomic & SDA Explorer</title>
+  <link rel="preconnect" href="https://unpkg.com" />
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
+  <link href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div>
+      <div class="eyebrow">RMIT Social Equity Research Centre</div>
+      <h1>Victorian SA3 Socioeconomic &amp; SDA Explorer</h1>
+      <p>Explore 2021 Census socioeconomic indicators and Specialist Disability Accommodation (SDA) dwelling counts across Victorian SA3s.</p>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <aside class="sidebar" aria-label="Map controls and SA3 details">
+      <section class="panel controls-panel">
+        <label for="indicatorSelect">Indicator</label>
+        <select id="indicatorSelect">
+          <optgroup label="Socioeconomic & demographic">
+            <option value="population_density_persons_km2">Population density</option>
+            <option value="median_age_years">Median age</option>
+            <option value="employed_labour_force_pct">Employed labour force</option>
+            <option value="owner_occupier_pct">Owner occupiers</option>
+            <option value="owner_outright_pct">Owned outright</option>
+            <option value="owner_mortgage_shared_equity_pct">Mortgage / shared equity</option>
+            <option value="renter_pct">Renters</option>
+            <option value="language_other_than_english_home_pct">Language other than English at home</option>
+            <option value="core_activity_assistance_pct">Core activity assistance</option>
+            <option value="long_term_health_condition_selected_pct">Selected long-term health condition</option>
+            <option value="atsi_language_home_pct">Aboriginal or Torres Strait Islander language at home</option>
+          </optgroup>
+          <optgroup label="Specialist Disability Accommodation">
+            <option value="SDA Dwelling Existing">SDA dwellings — Existing</option>
+            <option value="SDA Dwelling Legacy">SDA dwellings — Legacy</option>
+            <option value="SDA Dwelling New Build">SDA dwellings — New Build</option>
+            <option value="SDA Dwelling New Build (Refurbishment)">SDA dwellings — New Build (Refurbishment)</option>
+            <option value="SDA Dwelling Total" selected>SDA dwellings — Total</option>
+            <option value="sda_dwellings_per_10000_residents">SDA dwellings per 10,000 residents</option>
+          </optgroup>
+        </select>
+        <div class="indicator-note" id="indicatorNote"></div>
+      </section>
+
+      <section class="panel detail-panel" id="detailPanel">
+        <div class="detail-placeholder" id="detailPlaceholder">
+          <h2>Select an SA3</h2>
+          <p>Click an SA3 on the map to view its Census and SDA profile.</p>
+        </div>
+        <div id="detailContent" class="hidden"></div>
+      </section>
+
+      <section class="panel methodology-panel">
+        <h2>How to read the map</h2>
+        <p><strong>Colour:</strong> darker areas have higher values for the selected indicator.</p>
+        <p><strong>Classification:</strong> 5-class Jenks natural breaks, recalculated for each indicator.</p>
+        <p><strong>Rank:</strong> 1 is the highest value among the 66 standard Victorian SA3s.</p>
+      </section>
+    </aside>
+
+    <section class="map-wrap" aria-label="Interactive Victorian SA3 map">
+      <div id="map"></div>
+      <button id="resetView" class="map-button" type="button" title="Reset map view">Reset view</button>
+      <div class="map-indicator-card">
+        <span>Showing</span>
+        <strong id="currentIndicatorLabel">SDA dwellings — Total</strong>
+      </div>
+      <div id="legend" class="legend"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>Geography: ABS Statistical Area Level 3 (SA3), 2021.</span>
+    <span>Source data: ABS 2021 Census and supplied SDA dwelling data.</span>
+  </footer>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"></script>
+  <script src="https://unpkg.com/@maplibre/maplibre-gl-leaflet/leaflet-maplibre-gl.js"></script>
+  <script src="data/metric_config.js"></script>
+  <script src="data/sa3_data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
